@@ -1,6 +1,7 @@
 # IDA CFG & Call Graph Analyzer
 
 Automated analysis tool for extracting control flow graphs (CFG) and call graphs from binaries using IDA Pro in headless mode.
+Please Note Linux has not been fully tested.
 
 ## Features
 
@@ -23,24 +24,16 @@ Automated analysis tool for extracting control flow graphs (CFG) and call graphs
 git clone https://github.com/yourusername/CFG-IDA-Lib.git
 cd CFG-IDA-Lib
 
-2. Copy `analysis_script.py` to IDA's user directory:
-
-### Windows
-Copy-Item "analysis_script.py" "$env:APPDATA\Hex-Rays\IDA Pro\idapythonrc.py"
-
-### Linux/Mac
-cp analysis_script.py ~/.idapro/idapythonrc.py
-
 ## Usage
 
 ### Basic Analysis
 
 Run IDA in headless mode with the `-A` flag to perform automatic analysis:
 #### Windows
-& "C:\Program Files\IDA Professional 9.2\idat.exe" -A -o "C:\path\to\binary.exe"
+& "C:\Program Files\IDA Professional 9.2\idat.exe" -A -S"C:\path\to\script" "C:\path\to\binary.exe"
 
 #### Linux
-/path/to/idat -A -o /path/to/binary
+/path/to/idat -A /path/to/binary -S /path/to/script
 
 The script will:
 1. Wait for IDA's auto-analysis to complete
@@ -64,3 +57,15 @@ The script generates two JSON files in the same directory as the analyzed binary
    - Control flow edges between blocks
    - Entry and exit blocks
    - Complexity metrics (cyclomatic complexity, block count)
+  
+
+### Standalone Script
+
+#### Windows
+
+$env:IDADIR = "C:\Program Files\IDA Professional 9.2"   
+python .\analysis_ida_lib.py "C:\path\to\binary"
+
+#### Linux
+export IDADIR="/path/to/your/ida/installation"
+python .\analysis_ida_lib.py path\to\binary
